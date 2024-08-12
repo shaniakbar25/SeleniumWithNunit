@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExcelDataReader" Version="3.7.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
@@ -15,6 +17,10 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="127.0.6533.7200" />
     <PackageReference Include="Shouldly" Version="4.2.1" />
     <PackageReference Include="xunit.assert" Version="2.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ExcelFolder\" />
   </ItemGroup>
 
 </Project>

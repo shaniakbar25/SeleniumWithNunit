@@ -7,6 +7,7 @@ namespace SeleniumProject
     public class SampleTests
     {
         private IWebDriver driver;
+        public static IEnumerable<object[]> TestData => ExcelReader.ReadExcel(Constants.OrangeHRMExcelPath);
 
         [SetUp]
         public void Setup()
@@ -14,10 +15,11 @@ namespace SeleniumProject
             driver = WebDriverSingleton.GetWebDriver();
         }
 
+
         [Test]
         public void LoginWithValidCredentials()
         {
-            driver.Navigate().GoToUrl(Constants.BaseUrl);
+            driver.Navigate().GoToUrl(Constants.OrageHRMBaseUrl);
             driver.Manage().Window.Maximize();
             LoginPage loginPage = new LoginPage(driver);
             loginPage.SetUsername(Constants.Credentials.Username);
@@ -27,10 +29,23 @@ namespace SeleniumProject
             Assert.That(driver.Title.Contains(Constants.OrangeHRM_Title));
         }
 
+        [Test, TestCaseSource(nameof(TestData))]
+        public void LoginWithExcelSheetTestData(string ExcelUsername, string ExcelPassword)
+        {
+            driver.Navigate().GoToUrl(Constants.OrageHRMBaseUrl);
+            driver.Manage().Window.Maximize();
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.SetUsername(ExcelUsername);
+            loginPage.SetPassword(ExcelPassword);
+            loginPage.ClickLogin();
+            Assert.That(driver.Url.Contains("dashboard"), $"The text '{"dashboard"}' was not found on the page.");
+            Assert.That(driver.Title.Contains(Constants.OrangeHRM_Title));
+        }
+
         [Test]
         public void LoginWithInvalidCredentials()
         {
-            driver.Navigate().GoToUrl(Constants.BaseUrl);
+            driver.Navigate().GoToUrl(Constants.OrageHRMBaseUrl);
             driver.Manage().Window.Maximize();
             LoginPage loginPage = new LoginPage(driver);
             loginPage.SetUsername(Constants.Credentials.Username);
